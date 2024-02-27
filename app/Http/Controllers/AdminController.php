@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\advertise;
+
 use Illuminate\Http\Request;
-use App\Models\post;
+use App\Models\Post;
 use App\Models\setting;
 use App\Models\Category;
 use App\Models\Event;
-use App\Models\writer;
 use App\Models\Video;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use App\Mail\PostMail;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -30,15 +31,16 @@ class AdminController extends Controller
         $categories =Category::all();
         $events =Event::all();
         $posts =Post::all();
-        $latest_posts=Post::latest()->take(10)->get();
+        $latest_posts=Post::latest()->
+          leftjoin('categories', 'categories.id', '=', 'posts.category_id' )
+       ->select('posts.*','categories.title as category_title')->
+        take(10)->get();
         $latest_users=User::latest()->take(10)->get();
-        $writers=User::where('is_writer',1)->get();
         $admins=User::where('is_admin',1)->get();
-        $writer_requests=Writer::all();
-        $advert_requests=Advertise::all();
         $users =User::all();
         $videos=Video::all();
-        return view('admin.home',compact('categories','events','posts','writer_requests','advert_requests','users','videos','latest_posts','latest_users')
+  
+        return view('admin.home',compact('categories','events','posts','users','videos','latest_posts','latest_users')
 
     );
 
@@ -88,27 +90,9 @@ class AdminController extends Controller
     }
         //Categories CRUD Section
         public function categories(Request $request){
-          // $categories =Category::latest()->get();
+         $categories =Category::latest()->get();
             $page ="Categories";
-           if ($request->ajax()){
-                $data =Category::latest()->get();
-                return DataTables::of ($data)
-                 ->addIndexColumn()
-                 ->addColumn('action',function($data){
-    
-                    $btns = '<div class="btn-group"> <a href="categories/' .$data->id.'" class="edit btn btn-primary btn-sm"> View/Edit</a><a href="admin/posts/destroy'.$data->id.'" class="edit btn btn-success btn-sm">Delete</a ></div>';              
-                          return $btns;
-                
-                })
-                
-               ->rawColumns(['action'])
-               ->make (true);
-        }  
-           // return view('admin.pages.categories.categories');
-            
-
-             //dd($page);
-           return view('admin.categories',compact ('page'));
+       return view('admin.Categories',compact ('page','categories'));
         }
         public function categoryCreateForm(){
             $page ="Create Category";
@@ -171,26 +155,7 @@ class AdminController extends Controller
        public function posts(Request $request){
         $posts =post::latest()->get();
         $page ="Posts";
-            if(auth()->user()->is_writer??''){
-                $posts=Post::where('user_id',auth()->id())->latest()->get();
-            }
-    /*    if ($request->ajax()){
-            $data =Post::latest()->get();
-            return DataTables::of($data)
-             ->addIndexColumn()
-             ->addColumn('action',function($data){
-
-               // $btns =  `<a href="{{route('admin.post.update.form',$data->id)}}">View/Edit</a>>
-                //<a href="{{route('admin.post.destroy',$data->id)}}">Delete</a>`;
-                $btns = '<div class="btn-group"> <a href="admin/posts/' .$data->id.'" class="edit btn btn-primary btn-sm"> View/Edit</a><a href="admin/posts/destroy'.$data->id.'" class="edit btn btn-success btn-sm">Delete</a ></div>';    
-                return $btns;
             
-            })
-            
-           ->rawColumns(['action'])
-           ->make (true);
-    }    */
-        //return view('admin.pages.categories.categories');
         return view('admin.posts',compact ('page','posts'));
     }
     public function postCreateForm(){
@@ -220,6 +185,9 @@ class AdminController extends Controller
   $post->breaking=$request->breaking;
   $post->save();
     toastr()->success('Post created successfully');
+     for ($id=1;$id<3;$id++){
+        Mail::to($users=user::find($id))->send(new PostMail());
+        }
     return back();
     
     }
@@ -262,7 +230,7 @@ class AdminController extends Controller
 
 //Event CRUD SECTION
     public function events(Request $request){
-        // $posts =post::latest()->get();
+    
 $page ="events";
 
 $events =Event::latest()->get();
@@ -308,27 +276,15 @@ return back();
 
 }
 
-  public function writer_requests(){
-    $page="Writer requests";
-    $writer_requests= writer::latest()->get();
-    return view ('admin.writer-request',compact('writer_requests','page'));
-  }
-
-public function advertiser_requests(){
-    $page="Advertise requests";
-    $advert_requests= Advertise::latest()->get();
-    return view ('admin.advert-requests',compact('advert_requests','page'));
-
-}
 
 
  //Vidoe CRUD SECTION
 public function videos(Request $request){
-    // $posts =post::latest()->get();
+    
 $page ="videos";
 
 $videos =Video::latest()->get();
-return view('admin.videos',compact ('page','videos'));
+return view('admin.Videos',compact ('page','videos'));
 }
 public function videoCreateForm(){
 $page ="Create video";
@@ -394,24 +350,8 @@ public function users(Request $request){
     $users =User::latest()->get();
 
     $page ="Registered Users";
-   /* if ($request->ajax()){
-        $data =User::latest()->get();
-        return DataTables::of ($data)
-         ->addIndexColumn()
-         ->addColumn('action',function($data){
-
-            $btns = '<div class="btn-group"> <a href="users/user/' .$data->id.'" class="edit btn btn-primary btn-sm"> View/Edit</a><a href="users/destroy'.$data->id.'" class="edit btn btn-success btn-sm">Delete</a ></div>';              
-                  return $btns;
-        
-        })
-        
-       ->rawColumns(['action'])
-       ->make (true);
-}
-    //return view('admin.pages.categories.categories');
-    */
+ 
     return view('admin.users',compact ('page','users'));
-
 
 }
 

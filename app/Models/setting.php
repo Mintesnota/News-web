@@ -9,7 +9,7 @@ class setting extends Model
 {
     protected $guarded = ['id'];
     use HasFactory;
-     protected $fillabel  = [
+     protected $fillable  = [
         
           'site_name',
           'twitter',

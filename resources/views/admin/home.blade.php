@@ -92,39 +92,7 @@
           </div>
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>{{$writer_requests->count()}}</h3>
-
-                <p>Writer request</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-edit"></i>
-              </div>
-              @if(auth()->user()->is_admin)
-              <a href="{{route('admin.writer.request')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              @endif
-            </div>
-          </div>
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-dark">
-              <div class="inner">
-                <h3>{{$advert_requests->count()}}</h3>
-
-                <p>Advert request</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-newspaper"></i>
-              </div>
-              @if(auth()->user()->is_admin)
-              <a href="{{route('admin.advert.request')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              @endif
-            </div>
-          </div>
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light">
+           <div class="small-box bg-light">
               <div class="inner">
                 <h3>{{$videos->count()}}</h3>
 
@@ -139,20 +107,8 @@
             </div>
           </div>
 
-         <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-gray">
-              <div class="inner">
-                <h3>{{$writer_requests->count()}}</h3>
-
-                <p>Writers</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-play"></i>
-              </div>
-              @if(auth()->user()->is_admin)
-              <a href="{{route('admin.videos')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              @endif
+        
+  
             </div>
           </div>  
           <!-- ./col -->

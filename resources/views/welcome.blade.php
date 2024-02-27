@@ -14,40 +14,25 @@
         class="img-fluid"
       />
       <div class="banner-content">
-        <div class="badge badge-danger fs-12 font-weight-bold mb-3 ">
+        <div class="badge badge-danger fs-8 font-weight-bold mb-3 ">
          {{$latest_breaking_news->Category->title}}
         </div>
-        <h1 class="mb-0"></h1>
-        <h1 class="mb-2">
-          {{$latest_breaking_news->title}} - {{$latest_breaking_news->short_desc}}
-        </h1>
-        <div class="fs-12">
+        <h1 class="mb-2"></h1>
+           <div class="fs-12">
           <span class="mr-2">Posted</span>{{$latest_breaking_news->created_at->diffForHumans()}}
         </div>
       </div>
     </div>
   </a>
        @else
-       <div class="position-relative">
-        <img
-          src="assets/image/dashboard/home_1.jpg"
-          alt="banner"
-          class="img-fluid"
-        />
-        <div class="banner-content">
-          <div class="badge badge-danger fs-12 font-weight-bold mb-3">
-             global news
-          </div>
-          <h1 class="mb-0">GLOBAL PANDEMIC</h1>
-          <h1 class="mb-2">
-            Coronavirus Outbreak LIVE Updates:ICSE,CBSE Exams
-            Postponed, 168 Trains
-          </h1>
-          <div class="fs-12">
-            <span class="mr-2">Posted</span>10 Minutes ago
-          </div>
-        </div>
-      </div>
+              <div class=" font-weight-bold mb-3 " >
+          <p>
+            We stand on the brink of a technological revolution that will fundamentally alter the way we live, work, and relate to one another.
+            In its scale, scope, and complexity, the transformation will be unlike anything humankind has experienced before. 
+            We do not yet know just how it will unfold, but one thing is clear: the response to it must be integrated and comprehensive,
+            involving all stakeholders of the global polity, from the public and private sectors to academia and civil society.
+          </p>
+              </div>
      @endif
     </div>
 
@@ -58,6 +43,7 @@
 
          @if($latest_news->count()> 0)
           @foreach($latest_news as $news)
+          <a class="text_light"  style="text-decoration:none;"href ="{{route('client.post',$news->id)}}">
           <div
           class="d-flex border-bottom-blue pt-3 pb-4 align-items-center justify-content-between"
         >
@@ -75,6 +61,7 @@
             />
           </div>
         </div>
+        </a>
         @endforeach
         @else
            <h5>No latest news found</h5>
@@ -109,7 +96,7 @@
         <div class="card-body">
         @if($breaking_news->count() > 0)
          @foreach($breaking_news as  $news)
-         <a href="{{route('client.post',$news->id)}}" class="text-dark">
+         <a href="{{route('client.post',$news->id)}}" style="text-decoration:none;" class="text-blue">
          <div class="row">
           <div class="col-sm-4 grid-margin">
             <div class="position-relative">
@@ -136,6 +123,7 @@
             </p>
           </div>
         </div>
+        </a>
          @endforeach
          @else
              <h5>No breaking news items</h5>
@@ -156,7 +144,7 @@
               <div class="row">
                @if($videos->count()>0)
                      @foreach($videos as $video)
-                     <a href="{{$video->url}}">
+                     <a href="{{route('client.videos',$video->id)}}" style="text-decoration:none;" >
                      <div class="col-sm-6 grid-margin">
                       <div class="position-relative">
                         <div class="rotate-img">
@@ -202,7 +190,7 @@
                @if($latest_videos->count()>0)
                       @foreach($latest_videos as $video)
                       
-                 <a href="{{$video->url}}">
+                 <a href="{{route('client.videos',$video->id)}}" style="text-decoration:none;">
                   <div
                   class="d-flex justify-content-between align-items-center border-bottom pb-2"
                 >
@@ -225,7 +213,7 @@
 
              @endif
 
-            </div>
+              </div>
           </div>
         </div>
       </div>

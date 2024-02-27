@@ -35,14 +35,14 @@
               </thead>
             <tbody>
                
-                      {{--   @if($categories->count()>0)
+                        @if($categories->count()>0)
                          @foreach ($categories as $category)
                          <tr>
                          <td>{{$category->title}}</td>
                          <td>{{$category->desc}}</td>
                          <td>{{$category->created_at}}</td>
                          <td><a href="{{route('admin.category.update.form',$category->id)}}}"><i class="fa fa-eye"></i>/<i class="fa fa-edit"></a></td>
-                          <td><a href="{{route('admin.category.destroy',$category->id)}}}"> <i class="fa fa-trash text-danger"></a></td>
+                         <td><a href="{{route('admin.category.destroy',$category->id)}}}"> <i class="fa fa-trash text-danger"></a></td>
                          
                        </tr>
                          @endforeach
@@ -50,7 +50,7 @@
 
                          <h3>No categories found</h3>
                          @endif
-                --}}
+                
             </tbody>
             </table>
             
@@ -62,37 +62,6 @@
     <!-- /.content -->
 @endsection
 @section('additional_scripts')
-<script type="text/javascript">
-  $(document).ready(function(){
-   $('.categories-table').DataTables({
-     processing:true,
-     serverSide:true,
-     ajax:{
-       url:"{{route('admin.categories')}}",
-     },
-     columns:[
-     
-     {
-       data:'title',
-       name:'title'
-      },
-      {
-       data:'desc',
-       name:'desc'
-       },
-      
-       {
-       data:'created_at',
-       name:'created_at'
-        },
-       {
-         data:'action',
-         name:'action',
-         orderable:false
-       }
-        ]
-   });
-  });
- </script> 
+
 @endsection 
 

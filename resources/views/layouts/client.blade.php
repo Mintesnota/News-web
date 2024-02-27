@@ -1,5 +1,5 @@
 <?php
-$settings =App\Models\Setting::latest()->first();
+$settings =App\Models\setting::latest()->first();
 $categories =App\Models\category::latest()->take(7)->get();
 $posts =App\Models\post::latest()->take(5)->get();
 $latest_breaking =App\Models\Post::where('breaking',1)->latest()->first();
@@ -27,9 +27,10 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
 
     <!-- inject:css -->
     <link rel="stylesheet" href="{{asset('client/assets/css/style.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- endinject -->
 
-    @toastr_css
+    
     
   </head>
 
@@ -43,20 +44,15 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                 <div class="navbar-top">
                   <div class="d-flex justify-content-between align-items-center">
                     <ul class="navbar-top-left-menu">
-                      <li class="nav-item">
-                        <a href="{{route('advertise.form')}}" class="nav-link">Advertise</a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="{{route('about.us')}}" class="nav-link">About</a>
+                       <li class="nav-item">
+                        <a href="{{route('about.us')}}" class="nav-link">About us</a>
                       </li>
                       <li class="nav-item">
                         <a href="{{route('client.events')}}" class="nav-link">Events</a>
                       </li>
-                      <li class="nav-item">
-                        <a href="{{route('become.writer.form')}}" class="nav-link">Write for Us</a>
-                      </li>
+                     
 
-                      @if(auth()->check() && auth()->user()->is_admin ||  auth()->check() && auth()->user()->is_writer)
+                      @if(auth()->check() && auth()->user()->is_admin)
                       <li class="nav-item">
                         <a href="/admin/home" class="nav-link btn btn-success">Dashboard</a>
                       </li>
@@ -64,8 +60,15 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                       
                     </ul>
                     <ul class="navbar-top-right-menu">
-                      <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="mdi mdi-magnify"></i></a>
+                         
+                        <li class="nav-item">
+                      <form action="{{route('search.post')}}" method="POST" class="Search__form"><div class="SearchIcon"></div>
+                                     @csrf
+
+                          <input name="search"  id="something" class="Search__input" type="text" placeholder="Search" value="">
+                          <button type="submit" class="SearchIcon">Search</button>
+                        </form>
+                       
                       </li>
                       @if (auth()->check())
                       <li class="nav-item">
@@ -95,9 +98,9 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                     <div>
                     @if ($settings->site_logo)
                     <a class="navbar-brand" href="#">
-                      <img src="{{asset('storage/setting/logo/'.$settings->site_logo)}}" alt=""/></a> 
+                      <img src="{{asset('storage/setting/logo/'.$settings->site_logo)}}" alt="" width="10px" height="50px"/></a> 
                   @else 
-                  <a class="navbar-brand" href="#"
+                  <a class="badge badge-dark mr-3 " href="#"
                   >{{$settings->site_name}}</a> 
                   @endif
                     </div>
@@ -128,20 +131,33 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                             <a class="nav-link" href="/">Home</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="pages/contactus.html">Politics</a>
+                            <a class="nav-link" href="/client/category/6">Services</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="pages/contactus.html">Global news</a>
+                            <a class="nav-link" href="/client/category/5">Customers</a>
                           </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="pages/magazine.html">MAGAZINE</a>
-                          </li>
+                         
                     
                           <li class="nav-item">
-                            <a class="nav-link" href="pages/magazine.html">Contact</a>
+                             <a href="{{route('contact.us.form')}}" class="nav-link">Contact</a>
                           </li>
                         
-                        </ul>
+                        </ul> 
+                        
+                     <!--    <ul class="Margin-left Horizontal-menu navbar-nav d-lg-flex justify-content-between align-items-center text-white">
+                                <li class="nav-item active">
+                            <a class="nav-link" href="/">Home</a>
+                                      </li>
+                          
+                          @if ($categories->count() > 0)
+                           @foreach ($categories as $category)
+                          <li><a href="{{route('client.category',$category->id)}}">{{$category->title}}</a></li>
+                          @endforeach
+                           @else
+                          <h3>No categories Found</h3>
+                          @endif 
+           
+                           </ul> -->
                       </div>
                     </div>
                     <ul class="social-media">
@@ -183,7 +199,7 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
               
               @if ($breaking !=null)
 
-              <a href ="{{route('client.post',$breaking->id)}}">
+              <a href ="{{route('client.post',$breaking->id)}}" style="text-decoration:none;">
               <div class="d-lg-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                   <span class="badge badge-dark mr-3">{{$breaking->category->title}}</span>
@@ -191,10 +207,7 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                     {{$breaking->title}}
                   </p>
                 </div>
-                <div class="d-flex">
-                  <span class="mr-3 text-danger">{{$breaking->updated_at}}</span>
-                  {{-- <span class="text-danger">30°C,London</span> --}}
-                </div>
+             
               </div>
             </a>
            @else
@@ -253,7 +266,7 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                     <h3 class="font-weight-bold mb-3">RECENT POSTS</h3>
                  @if ($posts->count() >0)
                  @foreach($posts as $post)
-                   <a class="text_light" href ="{{route('client.post',$post->id)}}">
+                   <a class="text_light" href ="{{route('client.post',$post->id)}}" style="text-decoration:none;">
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="footer-border-bottom pb-2">
@@ -286,7 +299,7 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                     <h3 class="font-weight-bold mb-3">CATEGORIES</h3>
                        @if($categories->count() >0)
                        @foreach($categories as $category)
-                       <a class="text-light" href="{{route('client.category',$category->id)}}">
+                       <a class="text-light" href="{{route('client.category',$category->id)}}" style="text-decoration:none;">
                        <div class="footer-border-bottom pb-2 pt-2">
                         <div class="d-flex justify-content-between align-items-center">
                           <h5 class="mb-0 font-weight-600">{{$category->title}}</h5>
@@ -309,10 +322,10 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                   <div class="col-sm-12">
                     <div class="d-sm-flex justify-content-between align-items-center">
                       <div class="fs-14 font-weight-600">
-                        © 2020 @ <a href="https://www.bootstrapdash.com/" target="_blank" class="text-white"> BootstrapDash</a>. All rights reserved.
+                         All rights reserved.
                       </div>
                       <div class="fs-14 font-weight-600">
-                        Handcrafted by <a href="https://www.bootstrapdash.com/" target="_blank" class="text-white">BootstrapDash</a>
+                        Handcrafted by Minte
                       </div>
                     </div>
                   </div>
@@ -333,10 +346,9 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
       <!-- Custom js for this page-->
       <script src="{{asset('client/assets/js/demo.js')}}"></script>
       <script src="{{asset('client/assets/js/jquery.easeScroll.js')}}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <!-- End custom js for this page-->
-@jquery
-@toastr_js
-@toastr_render
+
     </body>
   </html>
   

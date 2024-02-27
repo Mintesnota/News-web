@@ -38,7 +38,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://cdn.ckeditor.com/4.23.0-lts/standard/ckeditor.js"></script>
         
   @yield('additional_styles')
-  @toastr_css
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" 
+  integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" 
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -95,18 +97,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          
-            @if ($user->image ??'')
-            <img class="profile-user-img img-fluid img-circle"  src="{{asset('/storage/profile/'.$user->image)}}" alt="User profile picture">
-            @else
-            <img class="profile-user-img img-fluid img-circle"  src="{{asset('storage/images/profile.png')}}" alt="User profile picture"> 
-            @endif
-        
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">@if(auth()->check()) {{auth()->user()->name}}
-                @else Guest user
-              @endif</a>
+          @if ($settings->site_logo)
+          <a class="navbar-brand" href="#">
+            <img src="{{asset('storage/setting/logo/'.$settings->site_logo)}}" alt="" width="100px" height="100px"/></a> 
+        @else 
+        <a class="badge badge-dark mr-3 " href="#"
+        >{{$settings->site_name}}</a> 
+        @endif           
         </div>
       </div>
 
@@ -247,25 +244,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
 
-          
-          <li class="nav-item">
-            <a href="{{route('admin.writer.request')}}" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Writer requests
-              </p>
-            </a>
-          </li>
-
-          
-          <li class="nav-item">
-            <a href="{{route('admin.advert.request')}}" class="nav-link">
-              <i class="nav-icon fas fa-newspaper"></i>
-              <p>
-                Advertising requests
-              </p>
-            </a>
-          </li>
+        
 
 
 
@@ -329,8 +308,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
  </script>
 @yield('additional_scripts')
 
-@jquery
-@toastr_js
-@toastr_render
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+ integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +39,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::middleware([ 'auth','admin'])->group( function (){
 
 
     
@@ -58,15 +58,18 @@ Route::get('admin/categories/destroy/{id}', [App\Http\Controllers\AdminControlle
 
 //Post Routes
 Route::get('admin/posts', [App\Http\Controllers\AdminController::class,'posts'])->name('admin.posts');
+
+
+
 Route::get('admin/post/create', [App\Http\Controllers\AdminController::class,'postCreateForm'])->name('admin.post.create.form');
 Route::post('admin/post/create', [App\Http\Controllers\AdminController::class,'postcreate'])->name('admin.post.create');
 Route::get('admin/posts/{id}', [App\Http\Controllers\AdminController::class,'postUpdateForm'])->name('admin.post.update.form');
 Route::post('admin/posts/{id}', [App\Http\Controllers\AdminController::class,'postUpdate'])->name('admin.post.update');
 Route::get('admin/posts/destroy/{id}', [App\Http\Controllers\AdminController::class,'postDestroy'])->name('admin.post.destroy');
 Route::post('client/ckupload',[App\Http\Controllers\FrontendController::class,'ckupload'])->name('ck.upload');
-Route::get('client/post/{id}',[App\Http\Controllers\FrontendController::class,'post'])->name('client.post');
+Route::get('/client/post/{id}',[App\Http\Controllers\FrontendController::class,'post'])->name('client.post');
 Route::get('/client/category/{id}',[App\Http\Controllers\FrontendController::class,'category'])->name('client.category');
-
+        
 
     //Admin event routes
 Route::get('admin/events', [App\Http\Controllers\AdminController::class,'events'])->name('admin.events');
@@ -92,29 +95,31 @@ Route::get('admin/advert-requests', [App\Http\Controllers\AdminController::class
 
 //User
 Route::get('admin/users', [App\Http\Controllers\AdminController::class,'users'])->name('admin.users');
-Route::get('admin/writers', [App\Http\Controllers\AdminController::class,'writers'])->name('admin.writers');
+
 Route::get('admin/user/{id}', [App\Http\Controllers\AdminController::class,'profile'])->name('admin.user.profile');
 Route::post('admin/users/user/{id}', [App\Http\Controllers\AdminController::class,'updateUser'])->name('admin.user.update');
 Route::get('admin/users/user/{id}', [App\Http\Controllers\AdminController::class,'updateUserForm'])->name('admin.user.update.form');
 Route::get('admin/users/destroy/{id}', [App\Http\Controllers\AdminController::class,'deleteUser'])->name('admin.user.destroy');
 Route::post('admin/user/image/{id}', [App\Http\Controllers\AdminController::class,'updateUserImage'])->name('admin.image.update');
 
-});
 
-Auth::routes();
+
+Auth::routes(['verify'=>true]);
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 //pages
 
-Route::get('/client/write',[App\Http\Controllers\FrontendController::class,'writeForm'])->middleware('auth')->name('become.writer.form');
-Route::post('/client/write/for/us',[App\Http\Controllers\FrontendController::class,'writeForus'])->middleware('auth')->name('become.writer');
+
+
 Route::get('/client/contact',[App\Http\Controllers\FrontendController::class,'contactForm'])->name('contact.us.form');
 Route::post('/client/contact',[App\Http\Controllers\FrontendController::class,'contactus'])->name('contact.us');
 
-Route::get('/client/advertise',[App\Http\Controllers\FrontendController::class,'advertiseForm'])->middleware('auth')->name('advertise.form');
-Route::post('/client/advertise/us',[App\Http\Controllers\FrontendController::class,'advertise'])->middleware('auth')->name('advertise');
-
 Route::get('client/about',[App\Http\Controllers\FrontendController::class,'about'])->name('about.us');
 Route::get('client/events',[App\Http\Controllers\FrontendController::class,'clientEvents'])->name('client.events');
+Route::get('client/videos/{id}',[App\Http\Controllers\FrontendController::class,'video'])->name('client.videos');
+Route::POST('/search',[App\Http\Controllers\FrontendController::class,'search'])->name('search.post');
+
+

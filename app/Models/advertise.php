@@ -14,3 +14,4 @@ class advertise extends Model
         'phone'
     ];
 }
+ 

@@ -51,27 +51,7 @@
  
     <div class="row">
       <div class="col-sm-4 grid-margin">
-        <div class="rotate-img">
-          <img
-            src="{{asset('storage/posts/'.$news->image )}}"
-            alt="banner"
-            class="img-fluid"
-          /> 
-        </div>
-      </div>  
-      <div class="col-sm-8 grid-margin">
-        <h2 class="font-weight-600 mb-2">
-          Kaine: Trump Jr. may have committed treason
-        </h2>
-        <p class="fs-13 text-muted mb-0">
-          <span class="mr-2">Photo </span>10 Minutes ago
-        </p>
-        <p class="fs-15">
-          Lorem Ipsum has been the industry's standard dummy
-          text ever since the 1500s, when an unknown printer
-          took a galley of type and scrambled it to make a
-          type specimen book.
-        </p>
+       
       </div>
     </div>
   </div>

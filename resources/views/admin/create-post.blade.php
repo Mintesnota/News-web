@@ -115,7 +115,7 @@
                     </div>
 
               
-                      <input type="number" name="user_id" value="1" class="form-control" autocomplete="off"  >
+                      <input type="number" name="user_id" value="1" class="form-control" autocomplete="off" hidden >
                     
 
                     <!-- /.card-body -->

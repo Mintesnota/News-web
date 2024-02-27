@@ -6,12 +6,11 @@ use Illuminate\Cache\LuaScripts;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\writer;
 use App\Models\User;
-use App\models\advertise;
 use App\Models\Event;
-use App\Models\Setting;
+use App\Models\setting;
 use App\Models\Video;
+use App\Models\contactus;
 
 class FrontendController extends Controller
 {
@@ -35,24 +34,13 @@ public function welcome()
           
 }
 
-public function ckupload(Request $request)
-{
-   if($request->hasFile('upload')){
-      $dir ="storage/ckuploads/";
-      $filenamestore=$this->uploadImage($request->file('upload'),$dir);
-      $CKEditorFuncNum= $request->input('CKEditorFuncNum');
-      $url = asset('storage/ckuploads/'.$filenamestore);
-      $msg ='image sucessfully uploaded';
-      $re ="<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum,'$url','$msg')</script>";
-              //reader Html output
-              @header('Content-type:text/html;charset=utf-8');
-              echo $re;
-   }
-}
+
 public function post($id){
+    
    $post =Post::find($id);
+   $title=$post->title;
    $post->increment('views',1);
-   return view('client.post',compact('post'));
+   return view('client.post',compact('post','title'));
 }
 
 public function category($id)
@@ -68,57 +56,44 @@ public function category($id)
 }
     
     
-
-
-public function writeForm(){
-   
-  // $user =auth()->user();
-
-   return view('client.become-writer');
-
+Public function contactForm(){
+    
+     return view('client.contact-us');
 }
-public function writeForus(Request $request){
-
-$request_sent= writer::where('user_id',auth()->id())->first();
+public function contactus(Request $request){
+$request_sent= contactus::where('id',auth()->id())->first();
 if( $request_sent){
 toastr()->success('Request already sent!','please wait for admin approval');
 return back();
 }
-
-writer::create($request->all());
-toastr()->success('Request saved successfully ','we will call you  for more information');
-return back();
-
-}
-public function contactForm(){
-
-}
-public function contactus(){
-
-}
-public function advertiseForm(){
-   return view('client.advertise');
-}
-public function advertise(Request $request){
-
-   $request_sent= advertise::where('user_id',auth()->id())->first();
-   if( $request_sent){
-   toastr()->success('Request already sent!','please wait for admin approval');
-   return back();
-   }
-   
-   advertise::create($request->all());
+ contactus::create($request->all());
    toastr()->success('Request saved successfully ','we will call you  for more information');
    return back();
    
 }
+
+
 public function about(){
-    $about= Setting::latest()->first()->about;
+    $about= setting::latest()->first()->about;
     return view('client.about', compact('about' ));
 }
 public function clientEvents(){
      $events=Event::latest()->paginate(10);
      return view('client.events',compact('events'));
+}
+public function video($id){
+    
+       $videos=Video::find($id);
+       $title=$videos->title;
+       $url=$videos->url;
+      return view('client.videos',compact('videos','title','url'));
+}
+public function search(Request $request){
+   $search = $request->input('search');
+        
+   $post= Post::where('title', 'like', "%$search%")->orwhere('long_desc','like',"%$search%")->first();
+   
+       return view('client.search',['post'=>$post]);
 }
 
 }
