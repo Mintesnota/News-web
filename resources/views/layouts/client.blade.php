@@ -162,7 +162,7 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                     </div>
                     <ul class="social-media">
                       <li>
-                        <a href="{{$settings->facebook}}">
+                        <a href="https://www.facebook.com/people/Micro-Sun-and-Solution/61550016956994/?mibextid=ZbWKwL">
                           <i class="mdi mdi-facebook"></i>
                         </a>
                       </li>
@@ -171,18 +171,14 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                           <i class="mdi mdi-youtube"></i>
                         </a>
                       </li>
+                      
                       <li>
-                        <a href="{{$settings->twitter}}">
-                          <i class="mdi mdi-twitter"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="{{$settings->instagram}}">
+                        <a href="https://www.instagram.com/micro_sun_and_solution/reel/C17KPxrijby/">
                           <i class="mdi mdi-instagram"></i>
                         </a>
                       </li>
                       <li>
-                        <a href="{{$settings->linkedin}}">
+                        <a href="https://www.linkedin.com/company/micro-sun-solution">
                           <i class="mdi mdi-linkedin"></i>
                         </a>
                       </li>
@@ -236,7 +232,7 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                     </h5>
                     <ul class="social-media mb-3">
                       <li>
-                        <a href="{{$settings->facebook}}">
+                        <a href="https://www.facebook.com/people/Micro-Sun-and-Solution/61550016956994/?mibextid=ZbWKwL">
                           <i class="mdi mdi-facebook"></i>
                         </a>
                       </li>
@@ -251,12 +247,12 @@ $breaking=App\Models\Post::where('breaking',1)->latest()->first();
                         </a>
                       </li>
                       <li>
-                        <a href="{{$settings->instagram}}">
+                        <a href="https://www.instagram.com/micro_sun_and_solution/reel/C17KPxrijby/">
                           <i class="mdi mdi-instagram"></i>
                         </a>
                       </li>
                       <li>
-                        <a href="{{$settings->linkedin}}">
+                        <a href="https://www.linkedin.com/company/micro-sun-solution">
                           <i class="mdi mdi-linkedin"></i>
                         </a>
                       </li>

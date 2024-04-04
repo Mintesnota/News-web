@@ -39,7 +39,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="logo">Site Name</label>
-                            <input type="text" name="site_name" class="form-control" autocomplete="off" required >
+                            <input type="text" name="site_name" value ="{{$settings->site_name}}" class="form-control" autocomplete="off" required >
                                           
                           </div>                          
                         </div>

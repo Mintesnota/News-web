@@ -25,7 +25,7 @@
         <div class="row">
           <div class= "col-md-12 ">
             <table class="table table-striped table-bordered table-hover table-responsive-sm ">
-            
+
               <thead>
                 <tr>
                    <th>Title</th>
@@ -33,8 +33,8 @@
                    <th>Date Created</th>
                 </tr>
               </thead>
-            <tbody>
-               
+              <tbody>
+
                         @if($categories->count()>0)
                          @foreach ($categories as $category)
                          <tr>
@@ -43,17 +43,17 @@
                          <td>{{$category->created_at}}</td>
                          <td><a href="{{route('admin.category.update.form',$category->id)}}}"><i class="fa fa-eye"></i>/<i class="fa fa-edit"></a></td>
                          <td><a href="{{route('admin.category.destroy',$category->id)}}}"> <i class="fa fa-trash text-danger"></a></td>
-                         
+
                        </tr>
                          @endforeach
                          @else
 
                          <h3>No categories found</h3>
                          @endif
-                
+
             </tbody>
             </table>
-            
+
         </div>
       </div>
         <!-- /.row -->
@@ -63,5 +63,5 @@
 @endsection
 @section('additional_scripts')
 
-@endsection 
+@endsection
 

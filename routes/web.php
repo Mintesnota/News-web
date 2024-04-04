@@ -41,7 +41,7 @@ require __DIR__.'/auth.php';
 
 
 
-    
+
 Route::get('admin/home',[App\Http\Controllers\AdminController::class,'home']);
 Route::get('admin/settings/update', [App\Http\Controllers\AdminController::class,'settingsUpdateForm'])->name('settings.update.form');
 Route::post('admin/settings/update', [App\Http\Controllers\AdminController::class,'settingsUpdate'])->name('settings.update');
@@ -66,10 +66,11 @@ Route::post('admin/post/create', [App\Http\Controllers\AdminController::class,'p
 Route::get('admin/posts/{id}', [App\Http\Controllers\AdminController::class,'postUpdateForm'])->name('admin.post.update.form');
 Route::post('admin/posts/{id}', [App\Http\Controllers\AdminController::class,'postUpdate'])->name('admin.post.update');
 Route::get('admin/posts/destroy/{id}', [App\Http\Controllers\AdminController::class,'postDestroy'])->name('admin.post.destroy');
-Route::post('client/ckupload',[App\Http\Controllers\FrontendController::class,'ckupload'])->name('ck.upload');
+Route::post('admin/ckupload/',[App\Http\Controllers\AdminController::class,'ckupload'])->name('upload');
+Route::get('client/ckupload/',[App\Http\Controllers\FrontendController::class,'ckupload'])->name('ckupload');
 Route::get('/client/post/{id}',[App\Http\Controllers\FrontendController::class,'post'])->name('client.post');
 Route::get('/client/category/{id}',[App\Http\Controllers\FrontendController::class,'category'])->name('client.category');
-        
+
 
     //Admin event routes
 Route::get('admin/events', [App\Http\Controllers\AdminController::class,'events'])->name('admin.events');
@@ -121,5 +122,4 @@ Route::get('client/about',[App\Http\Controllers\FrontendController::class,'about
 Route::get('client/events',[App\Http\Controllers\FrontendController::class,'clientEvents'])->name('client.events');
 Route::get('client/videos/{id}',[App\Http\Controllers\FrontendController::class,'video'])->name('client.videos');
 Route::POST('/search',[App\Http\Controllers\FrontendController::class,'search'])->name('search.post');
-
 

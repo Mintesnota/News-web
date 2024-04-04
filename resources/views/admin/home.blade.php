@@ -107,14 +107,14 @@
             </div>
           </div>
 
-        
-  
+
+
             </div>
-          </div>  
+          </div>
           <!-- ./col -->
         </div>
-        
-          
+
+
           <div class="row">
            <div class="col-lg-6">
 
@@ -125,7 +125,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-            <table class="table table-bordered table-resonsive-sm">            
+            <table class="table table-bordered table-resonsive-sm">
                   <thead>
                   <tr>
                     <th>Name</th>
@@ -145,7 +145,7 @@
                       @endforeach
                     @else
                      <h2>No users found in the database</h2>
-                      
+
                     @endif
                   </tbody>
                     </table>
@@ -153,15 +153,15 @@
 
            </div>
            <div class="col-lg-6">
-  
-                
+
+
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Latest Posts</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-          <table class="table table-bordered table-resonsive-sm">             
+          <table class="table table-bordered table-resonsive-sm">
                 <thead>
                 <tr>
                   <th>Title</th>
@@ -182,7 +182,7 @@
                     @endforeach
                   @else
                    <h2>No posts found in the database</h2>
-                    
+
                   @endif
                 </tbody>
           </table>
@@ -190,7 +190,7 @@
            </div>
           </div>
 
-         
+
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>

@@ -12,9 +12,11 @@
                     <p class="fs-13 text-muted mb-0">
                       <span class="mr-2">Posted </span>{{$post->created_at->diffForHumans()}}
                     </p>
-                     <p class="fs-15">
-                       {{$post->long_desc}}
-                          </p>
+                      <p >
+                       {!! $post->long_desc !!}</p>
+                       <p >
+                       {{-- {!! "<p>test</p><img src='https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg'>" !!}</p> --}}
+
                   </div>
                   <div class="col-sm-4">
                     <div class="rotate-img">
@@ -22,12 +24,12 @@
             src="{{asset('storage/posts/'.$post->image )}}"
             alt="banner"
             class="img-fluid"
-          /> 
+          />
         </div>
          </div>
                 </div>
               </div>
             </div>
           </div>
-    
+
   @endsection

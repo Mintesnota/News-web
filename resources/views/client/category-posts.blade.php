@@ -16,7 +16,7 @@
   <div class="col-lg-8">
 
     @if($all_news->count()>0)
-    
+
           @foreach($all_news as $news)
           <a href="{{route('client.post',$news->id)}}">
           <div class="row">
@@ -37,21 +37,21 @@
                 <span class="mr-2">Posted </span>{{$news->created_at->diffForHumans()}}
               </p>
               <p class="fs-15">
-                {{$news->short_desc}}
+               {{{$news->short_desc}}}
               </p>
             </div>
           </div>
     </a>
-       
+
 @endforeach
     @else
          <h2>No news found in this category</h2>
     @endif
 
- 
+
     <div class="row">
       <div class="col-sm-4 grid-margin">
-       
+
       </div>
     </div>
   </div>
@@ -120,8 +120,8 @@
       @endforeach
       @else
              <h3>No trending posts</h3>
-      @endif 
-     
+      @endif
+
     </div>
   </div>
 </div>

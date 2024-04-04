@@ -15,7 +15,7 @@ use App\Models\contactus;
 class FrontendController extends Controller
 {
    public function uploadImage($image, $dir)
-   {    
+   {
        $image_name=$image->getClientOriginalName();
        $new_name = time().$image_name;
        $image->move($dir, $new_name);
@@ -31,12 +31,12 @@ public function welcome()
    $latest_news =Post::latest()->take(5)->get();
    $latest_videos =Video::latest()->take(10)->get();
    return view('welcome',compact('categories','latest_breaking_news','breaking_news','latest_news','videos','latest_videos'));
-          
+
 }
 
 
-public function post($id){
-    
+public function post(Request $request, $id){
+
    $post =Post::find($id);
    $title=$post->title;
    $post->increment('views',1);
@@ -54,10 +54,10 @@ public function category($id)
 
    return view('client.category-posts',compact('category','latest_news','all_news','title','trending'));
 }
-    
-    
+
+
 Public function contactForm(){
-    
+
      return view('client.contact-us');
 }
 public function contactus(Request $request){
@@ -69,7 +69,7 @@ return back();
  contactus::create($request->all());
    toastr()->success('Request saved successfully ','we will call you  for more information');
    return back();
-   
+
 }
 
 
@@ -82,7 +82,7 @@ public function clientEvents(){
      return view('client.events',compact('events'));
 }
 public function video($id){
-    
+
        $videos=Video::find($id);
        $title=$videos->title;
        $url=$videos->url;
@@ -90,10 +90,17 @@ public function video($id){
 }
 public function search(Request $request){
    $search = $request->input('search');
-        
-   $post= Post::where('title', 'like', "%$search%")->orwhere('long_desc','like',"%$search%")->first();
-   
-       return view('client.search',['post'=>$post]);
-}
 
+   $post= Post::where('title', 'like', "%$search%")->orwhere('long_desc','like',"%$search%")->first();
+
+       return view('client.search',['post'=>$post]);
+
+}
+public function ckupload()
+   {
+       $image_name=$image->getClientOriginalName();
+       $new_name = time().$image_name;
+       $image->move($dir, $new_name);
+        return $new_name;
+   }
 }

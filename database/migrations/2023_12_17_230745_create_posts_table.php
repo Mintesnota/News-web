@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('short_desc');
             $table->string('image');
-            $table->longText('long_desc');
+            $table->string('long_desc');
             $table->integer('special')->default('0');
             $table->integer('breaking')->default('0');
             $table->integer('views')->default('0');

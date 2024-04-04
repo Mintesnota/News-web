@@ -10,7 +10,6 @@
 namespace PHPUnit\TextUI;
 
 use const PHP_EOL;
-use function is_file;
 use function is_readable;
 use function printf;
 use function realpath;
@@ -154,12 +153,21 @@ final class Application
                 $extensionReplacesResultOutput,
             );
 
-            if (!$extensionReplacesOutput) {
+            if (!$configuration->debug() && !$extensionReplacesOutput) {
                 $this->writeRuntimeInformation($printer, $configuration);
                 $this->writePharExtensionInformation($printer, $pharExtensions);
                 $this->writeRandomSeedInformation($printer, $configuration);
 
                 $printer->print(PHP_EOL);
+            }
+
+            if ($configuration->debug()) {
+                EventFacade::instance()->registerTracer(
+                    new EventLogger(
+                        'php://stdout',
+                        false,
+                    ),
+                );
             }
 
             $this->registerLogfileWriters($configuration);
@@ -216,7 +224,7 @@ final class Application
 
             $result = TestResultFacade::result();
 
-            if (!$extensionReplacesResultOutput) {
+            if (!$extensionReplacesResultOutput && !$configuration->debug()) {
                 OutputFacade::printResult($result, $testDoxResult, $duration);
             }
 
@@ -323,7 +331,7 @@ final class Application
 
     private function loadXmlConfiguration(false|string $configurationFile): XmlConfiguration
     {
-        if (!$configurationFile) {
+        if ($configurationFile === false) {
             return DefaultConfiguration::create();
         }
 
@@ -378,7 +386,7 @@ final class Application
         }
 
         if ($cliConfiguration->migrateConfiguration()) {
-            if (!$configurationFile) {
+            if ($configurationFile === false) {
                 $this->exitWithErrorMessage('No configuration file found to migrate');
             }
 
@@ -508,9 +516,7 @@ final class Application
     private function registerLogfileWriters(Configuration $configuration): void
     {
         if ($configuration->hasLogEventsText()) {
-            if (is_file($configuration->logEventsText())) {
-                unlink($configuration->logEventsText());
-            }
+            @unlink($configuration->logEventsText());
 
             EventFacade::instance()->registerTracer(
                 new EventLogger(
@@ -521,9 +527,7 @@ final class Application
         }
 
         if ($configuration->hasLogEventsVerboseText()) {
-            if (is_file($configuration->logEventsVerboseText())) {
-                unlink($configuration->logEventsVerboseText());
-            }
+            @unlink($configuration->logEventsVerboseText());
 
             EventFacade::instance()->registerTracer(
                 new EventLogger(

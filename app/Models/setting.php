@@ -10,7 +10,7 @@ class setting extends Model
     protected $guarded = ['id'];
     use HasFactory;
      protected $fillable  = [
-        
+
           'site_name',
           'twitter',
           'youtube',
@@ -18,9 +18,8 @@ class setting extends Model
           'instagram',
           'site_logo',
           'linkedin',
-          'site_desc',  
+          'site_desc',
           'about'
-          
 
-     ];
+    ];
 }

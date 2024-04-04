@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
-
 return [
 
     /*
@@ -159,7 +158,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -168,10 +167,11 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-       
+
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\DataTables\ButtonsServiceProvider::class,
         Yajra\DataTables\FractalServiceProvider::class,
+
     ])->toArray(),
 
     /*
@@ -188,7 +188,11 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
+       'Image' => Intervention\Image\Facades\Image::class,
+
+
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-]; 
+];

@@ -30,17 +30,17 @@
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-    
+
                   <form role="form" method="post" action="{{route('admin.video.create')}}"  enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="card-body">
-                        
-                
-                        
+
+
+
                           <div class="form-group">
                             <label for="video_name">Video Title</label>
                             <input type="text" name="title" class="form-control"  autocomplete="off" required>
-                                                                  
+
                           </div>
 
                           <div class="form-group">
@@ -54,25 +54,25 @@
 
                                     @endif
                             </select>
-                                                                  
+
                           </div>
                           <div class="form-group">
                             <label for="video_name">Video Link</label>
                             <input type="text" name="url" class="form-control"  autocomplete="off" required>
-                                                                  
+
                           </div>
 
                           <div class="form-group">
                             <label for="video_name">Video Thumbnail</label>
                             <input type="file" name="image" class="form-control"  autocomplete="off" required>
-                                                                  
+
                           </div>
-                    
-                     
-                        
-                   
-                                     
-                            
+
+
+
+
+
+
                       <input type="number" name="user_id" value="{{auth()->id()}}" class="form-control" autocomplete="off" hidden >
                     </div>
 
@@ -82,7 +82,7 @@
                       <button type="submit" class="btn btn-primary">Create Post</button>
                     </div>
                   </form>
-            
+
                 </div>
 
             </div>
